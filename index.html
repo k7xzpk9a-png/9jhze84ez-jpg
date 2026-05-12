@@ -1,0 +1,177 @@
+<!DOCTYPE html><html><head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/9jhze84ez-jpg/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="nh90 performance calculator">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="nh90">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <title>nh90</title>
+  <link rel="manifest" href="manifest.json">
+  <style id="splash-screen-style">
+    html {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      background-color: #303030;
+          background-size: 100% 100%;
+    }
+
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .contain {
+      display:block;
+      width:100%; height:100%;
+      object-fit: contain;
+    }
+
+    .stretch {
+      display:block;
+      width:100%; height:100%;
+    }
+
+    .cover {
+      display:block;
+      width:100%; height:100%;
+      object-fit: cover;
+    }
+
+    .bottom {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      -ms-transform: translate(-50%, 0);
+      transform: translate(-50%, 0);
+    }
+
+    .bottomLeft {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .bottomRight {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  </style>
+  <script id="splash-screen-script">
+    function removeSplashFromWeb() {
+      document.getElementById("splash")?.remove();
+      document.getElementById("splash-branding")?.remove();
+      document.body.style.background = "transparent";
+    }
+  </script>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+</head>
+<body>
+  <picture id="splash">
+      <source srcset="splash/img/light-1x.png 1x, splash/img/light-2x.png 2x, splash/img/light-3x.png 3x, splash/img/light-4x.png 4x" media="(prefers-color-scheme: light)">
+      <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
+      <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
+  </picture>
+  <script src="flutter_bootstrap.js" async=""></script>
+
+  <!-- PWA update banner: shown when a new service worker has installed
+       and is waiting to activate. Tapping Reload activates it. -->
+  <div id="pwa-update-banner" style="
+       display:none; position:fixed; bottom:0; left:0; right:0;
+       background:#1565C0; color:#fff; padding:12px 16px; z-index:99999;
+       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+       align-items:center; justify-content:space-between;
+       box-shadow:0 -2px 8px rgba(0,0,0,0.4);">
+    <span style="font-size:14px;">A new version is available.</span>
+    <button id="pwa-reload-btn" style="
+        background:#fff; color:#1565C0; border:none; padding:8px 16px;
+        border-radius:4px; font-weight:bold; font-size:13px; cursor:pointer;">
+      Reload
+    </button>
+  </div>
+  <script>
+    (function () {
+      if (!('serviceWorker' in navigator)) return;
+
+      function showBanner(waitingWorker) {
+        var banner = document.getElementById('pwa-update-banner');
+        var btn = document.getElementById('pwa-reload-btn');
+        banner.style.display = 'flex';
+        btn.onclick = function () {
+          if (waitingWorker) {
+            // Flutter SW format: see build/web/flutter_service_worker.js.
+            // controllerchange will trigger the reload once it activates.
+            waitingWorker.postMessage('skipWaiting');
+          } else {
+            window.location.reload();
+          }
+        };
+      }
+
+      navigator.serviceWorker.ready.then(function (reg) {
+        if (reg.waiting && navigator.serviceWorker.controller) {
+          showBanner(reg.waiting);
+        }
+        reg.addEventListener('updatefound', function () {
+          var nw = reg.installing;
+          if (!nw) return;
+          nw.addEventListener('statechange', function () {
+            if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+              showBanner(nw);
+            }
+          });
+        });
+
+        // Force an SW update check whenever the app becomes visible
+        // (home-screen PWAs rarely do a full reload on resume) and once
+        // per hour for long-lived sessions. Without this, a phone that
+        // never closes the PWA will sit on a stale build for days.
+        function checkForUpdate() {
+          reg.update().catch(function () {});
+        }
+        document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState === 'visible') checkForUpdate();
+        });
+        setInterval(checkForUpdate, 60 * 60 * 1000);
+      });
+
+      var refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
+    })();
+  </script>
+
+</body></html>
