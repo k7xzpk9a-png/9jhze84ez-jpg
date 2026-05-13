@@ -1,5 +1,5 @@
 'use strict';
-const BUILD_ID = '17e673b-dirty-2026-05-13T11:40:27Z';
+const BUILD_ID = 'b24c8ac-2026-05-13T12:07:31Z';
 const CACHE_NAME = 'nh90-' + BUILD_ID;
 const PRECACHE_URLS = [
   "assets/AssetManifest.bin",
